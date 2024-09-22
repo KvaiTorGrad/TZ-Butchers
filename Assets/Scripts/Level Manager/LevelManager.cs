@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace ButchersGames
 {
@@ -29,7 +30,9 @@ namespace ButchersGames
         [SerializeField] LevelsList levels;
         public List<Level> Levels => levels.lvls;
 
-        public event Action OnLevelStarted;
+        public static event Action OnLevelStarted;
+        public static Action<bool> OnLevelEntedIsLoss;
+        public static Action OnLevelEnted;
 
 
         public void Init()
@@ -63,13 +66,13 @@ namespace ButchersGames
 
         public void RestartLevel()
         {
-            SelectLevel(CurrentLevelIndex, false);
+            //SelectLevel(CurrentLevelIndex, false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         public void NextLevel()
         {
-            if (!editorMode) CurrentLevel++;
-            SelectLevel(CurrentLevelIndex + 1);
+            RestartLevel();
         }
 
         public void SelectLevel(int levelIndex, bool indexCheck = true)
