@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedForward: 4
   _speedSide: 2
-  _speedRotate: 10
+  _speedRotate: 5
   _rangePosition: 1.8

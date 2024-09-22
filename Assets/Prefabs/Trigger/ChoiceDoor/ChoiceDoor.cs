@@ -8,6 +8,7 @@ public class ChoiceDoor : Item
         Party
     }
     [SerializeField] private Choice _choice;
+    [SerializeField] private AudioClip _clip;
     public override void Include(bool isInclude)
     {
         transform.root.gameObject.SetActive(isInclude);
@@ -25,6 +26,7 @@ public class ChoiceDoor : Item
                     GameManager.Instance.Bank.SetCondition(-20);
                     break;
             }
+            SFXManager.Instance.PlayAudioClip.Invoke(_clip);
         }
     }
 }

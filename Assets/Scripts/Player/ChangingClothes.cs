@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChangingClothes : MonoBehaviour
 {
     [SerializeField] private SkinnedMeshRenderer[] clothes;
+    [SerializeField] private AudioClip _clip;
     private int _activeLvlCloth = 1;
     private void Start()
     {
@@ -12,6 +11,7 @@ public class ChangingClothes : MonoBehaviour
     }
     private void Change(int lvl)
     {
+        if (_activeLvlCloth == lvl) return;
         clothes[_activeLvlCloth].gameObject.SetActive(false);
         switch (lvl)
         {

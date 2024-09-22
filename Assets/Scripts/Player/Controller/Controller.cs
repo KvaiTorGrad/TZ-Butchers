@@ -1,11 +1,13 @@
 using ButchersGames;
 using SingleTon;
+using UnityEngine;
 
 public class Controller : SingletonBase<Controller>
 {
     private IControlleble _controlleble;
     private ControlsGame _inputActions;
     public void SetControlleble(IControlleble controlleble) => _controlleble = controlleble;
+    public IControlleble GetControlleble() => _controlleble;
 
     protected override void Awake()
     {
@@ -39,6 +41,7 @@ public class Controller : SingletonBase<Controller>
 
 public interface IControlleble
 {
+    public Animator Animator { get; }
     public PlayerParametrs PlayerParametrs { get;}
     public float MinXPosition { get; set; }
     public float MaxXPosition { get; set; }

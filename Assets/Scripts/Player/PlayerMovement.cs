@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour, IControlleble
     private LimitSide _limitSide;
     [SerializeField] private PlayerParametrs _playerParametrs;
     public PlayerParametrs PlayerParametrs => _playerParametrs;
-
+    public Animator Animator => _animator;
     public float MinXPosition { get; set; }
     public float MaxXPosition { get; set; }
 
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour, IControlleble
     private void Start()
     {
         GameManager.Instance.Bank.ConditionLvl += SetAnimationMove;
-        LevelManager.OnLevelEnted += SetAnimationEnd;
+        LevelManager.OnLevelEntedIsLoss += SetAnimationEnd;
         Controller.Instance.SetControlleble(this);
     }
 
@@ -85,12 +85,17 @@ public class PlayerMovement : MonoBehaviour, IControlleble
 
     private void SetAnimationMove(int lvl) => _animator.SetFloat("LvlCondition", lvl);
 
-    private void SetAnimationEnd() => _animator.SetTrigger("EndGame");
+    private void SetAnimationEnd(bool isLoss){
+        if (isLoss)
+            _animator.SetTrigger("Loss");
+        else
+            _animator.SetTrigger("Win");
+    }
 
     private void OnDestroy()
     {
         GameManager.Instance.Bank.ConditionLvl -= SetAnimationMove;
-        LevelManager.OnLevelEnted -= SetAnimationEnd;
+        LevelManager.OnLevelEntedIsLoss -= SetAnimationEnd;
     }
 }
 

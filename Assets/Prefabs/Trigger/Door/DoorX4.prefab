@@ -174,20 +174,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1111529599694489790, guid: b9e3202f765f7c446b06de88a8b2aecf,
+        type: 3}
+      propertyPath: _lvl
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111529599694489790, guid: b9e3202f765f7c446b06de88a8b2aecf,
+        type: 3}
+      propertyPath: _finishClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 09629488a3fa50343b95ea0ecedbdd7d, type: 3}
     - target: {fileID: 1605147418921089490, guid: b9e3202f765f7c446b06de88a8b2aecf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 60.6
+      value: 52.88656
       objectReference: {fileID: 0}
     - target: {fileID: 1605147418921089490, guid: b9e3202f765f7c446b06de88a8b2aecf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.03
+      value: -0.10000014
       objectReference: {fileID: 0}
     - target: {fileID: 1605147418921089490, guid: b9e3202f765f7c446b06de88a8b2aecf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 51.24
+      value: 51.174095
       objectReference: {fileID: 0}
     - target: {fileID: 1605147418921089490, guid: b9e3202f765f7c446b06de88a8b2aecf,
         type: 3}
@@ -229,6 +239,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorX4
       objectReference: {fileID: 0}
+    - target: {fileID: 3215792378130779227, guid: b9e3202f765f7c446b06de88a8b2aecf,
+        type: 3}
+      propertyPath: _lvl
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5937302705494324455, guid: b9e3202f765f7c446b06de88a8b2aecf,
         type: 3}
       propertyPath: m_text
@@ -236,7 +251,8 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3215792378130779227, guid: b9e3202f765f7c446b06de88a8b2aecf, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8453658736239642085, guid: b9e3202f765f7c446b06de88a8b2aecf, type: 3}
     - {fileID: 2771522139614048717, guid: b9e3202f765f7c446b06de88a8b2aecf, type: 3}

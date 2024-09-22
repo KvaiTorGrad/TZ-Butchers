@@ -11,7 +11,8 @@ public class ItemGiveObject : Item
     }
     [SerializeField] private ItemVariable _variable;
     [SerializeField] private int _value;
-
+    [SerializeField] private AudioClip _clip;
+    [SerializeField] private ParticleSystem _particleSystem;
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.TryGetComponent(out IControlleble player))
@@ -20,9 +21,11 @@ public class ItemGiveObject : Item
                 {
                     case ItemVariable.Money:
                     GameManager.Instance.Bank.SetCondition(_value);
-                        break;
+                    SFXManager.Instance.PlayAudioClip.Invoke(_clip);
+                    break;
                     case ItemVariable.Alcohol:
                     GameManager.Instance.Bank.SetCondition(-_value);
+                    SFXManager.Instance.PlayAudioClip.Invoke(_clip);
                     break;
                 }
             Include(false);

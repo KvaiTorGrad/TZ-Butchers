@@ -179,11 +179,26 @@ PrefabInstance:
       propertyPath: m_text
       value: X3
       objectReference: {fileID: 0}
+    - target: {fileID: 4658563231008785966, guid: 8e1dc990759690a4cb358131a50ca570,
+        type: 3}
+      propertyPath: _lvl
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5175729388669662422, guid: 8e1dc990759690a4cb358131a50ca570,
         type: 3}
       propertyPath: m_Name
       value: Door X3
       objectReference: {fileID: 0}
+    - target: {fileID: 7163734948141204171, guid: 8e1dc990759690a4cb358131a50ca570,
+        type: 3}
+      propertyPath: _lvl
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7163734948141204171, guid: 8e1dc990759690a4cb358131a50ca570,
+        type: 3}
+      propertyPath: _finishClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 09629488a3fa50343b95ea0ecedbdd7d, type: 3}
     - target: {fileID: 8809288950174741415, guid: 8e1dc990759690a4cb358131a50ca570,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -234,7 +249,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4658563231008785966, guid: 8e1dc990759690a4cb358131a50ca570, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2930532910584192581, guid: 8e1dc990759690a4cb358131a50ca570, type: 3}
     - {fileID: 8973621127963240205, guid: 8e1dc990759690a4cb358131a50ca570, type: 3}

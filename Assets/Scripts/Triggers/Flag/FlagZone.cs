@@ -1,20 +1,18 @@
 using ButchersGames;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlagZone : Item
 {
-    private enum Zone
+    protected enum Zone
     {
         Flag,
-        Door,
-        Finish
+        Door
     }
 
-    private Animator _animator;
-    [SerializeField] private Zone _zone;
-    [SerializeField]private bool _isPassed;
+    protected Animator _animator;
+    [SerializeField] protected Zone _zone;
+    protected bool _isPassed;
+    [SerializeField] protected AudioClip _clip;
     public bool IsPassed => _isPassed;
     private void Awake()
     {
@@ -28,26 +26,15 @@ public class FlagZone : Item
             if (_zone == Zone.Flag)
             {
                 _animator.SetTrigger("UpFlage");
+                SFXManager.Instance.PlayAudioClip(_clip);
                 _isPassed = true;
-            }
-            else if(_zone == Zone.Door)
-            {
-                _animator.SetTrigger("OpenDoor");
-                _isPassed = true;
-            }
-            else
-            {
-                LevelManager.OnLevelEnted?.Invoke();
             }
         }
     }
 
     protected override void OnTriggerExit(Collider other)
     {
-        if (_zone == Zone.Flag || _zone == Zone.Door)
-        {
-            base.OnTriggerExit(other);
-            Level.Instance.TurnOffItems();
-        }
+        base.OnTriggerExit(other);
+        Level.Instance.TurnOffItems();
     }
 }
