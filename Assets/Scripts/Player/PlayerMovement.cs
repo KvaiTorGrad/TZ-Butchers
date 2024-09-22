@@ -1,44 +1,42 @@
+using ButchersGames;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour, IControlleble
 {
-    [SerializeField] private float _speedForward;
-    [SerializeField] private float _speedSide;
-    [SerializeField] private float _speedRotate;
-    [Range(0, 3), SerializeField] private float _rangePosition;
-    private float _minXPosition, _maxXPosition;
-
-
+    private Animator _animator;
     private delegate void LimitSide();
     private LimitSide _limitSide;
+    [SerializeField] private PlayerParametrs _playerParametrs;
+    public PlayerParametrs PlayerParametrs => _playerParametrs;
 
-    public float RangePosition => _rangePosition;
-
-    public float MinXPosition { get => _minXPosition; set => _minXPosition = value; }
-    public float MaxXPosition { get => _maxXPosition; set => _maxXPosition = value; }
+    public float MinXPosition { get; set; }
+    public float MaxXPosition { get; set; }
 
     private void Awake()
     {
-        MinXPosition = -RangePosition;
-        MaxXPosition = RangePosition;
+        _animator = GetComponentInChildren<Animator>();
+        MinXPosition = -PlayerParametrs.RangePosition;
+        MaxXPosition = PlayerParametrs.RangePosition;
         InitLimitationSide(Side.X);
     }
     private void Start()
     {
+        GameManager.Instance.Bank.ConditionLvl += SetAnimationMove;
+        LevelManager.OnLevelEnted += SetAnimationEnd;
         Controller.Instance.SetControlleble(this);
     }
 
     public void MovementForward()
     {
-        transform.Translate(_speedForward * Time.deltaTime * Vector3.forward);
+        transform.Translate(PlayerParametrs.SpeedForward * Time.deltaTime * Vector3.forward);
     }
 
     public void MovementHorizontal(ControlsGame inputActions)
     {
         var directionX = inputActions.Player.Move.ReadValue<Vector2>().x;
         if (directionX == 0) return;
-        transform.Translate(_speedSide * directionX * Time.deltaTime * Vector3.right);
+        transform.Translate(PlayerParametrs.SpeedSide * directionX * Time.deltaTime * Vector3.right);
         _limitSide();
     }
     private void InitLimitationSide(Side side)
@@ -75,7 +73,7 @@ public class PlayerMovement : MonoBehaviour, IControlleble
         var direction = transform.eulerAngles.y + rotateY;
         while (transform.eulerAngles.y != direction)
         {
-            var rotate = Mathf.Lerp(transform.eulerAngles.y, direction, Time.deltaTime * _speedRotate);
+            var rotate = Mathf.Lerp(transform.eulerAngles.y, direction, Time.deltaTime * PlayerParametrs.SpeedRotate);
             if (direction > transform.eulerAngles.y)
                 rotate = Mathf.CeilToInt(rotate);
             else
@@ -83,6 +81,16 @@ public class PlayerMovement : MonoBehaviour, IControlleble
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, rotate, transform.eulerAngles.z);
             yield return null;
         }
+    }
+
+    private void SetAnimationMove(int lvl) => _animator.SetFloat("LvlCondition", lvl);
+
+    private void SetAnimationEnd() => _animator.SetTrigger("EndGame");
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.Bank.ConditionLvl -= SetAnimationMove;
+        LevelManager.OnLevelEnted -= SetAnimationEnd;
     }
 }
 

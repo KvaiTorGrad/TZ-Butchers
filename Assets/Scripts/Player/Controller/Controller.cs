@@ -1,3 +1,4 @@
+using ButchersGames;
 using SingleTon;
 
 public class Controller : SingletonBase<Controller>
@@ -10,26 +11,35 @@ public class Controller : SingletonBase<Controller>
     {
         base.Awake();
         _inputActions = new();
+        LevelManager.OnLevelStarted += StartGame;
+        LevelManager.OnLevelEnted += EndGame;
     }
-    private void Start()
-    {
-        StartGame();
-    }
+
     private void StartGame()
     {
         _inputActions.Enable();
     }
+    private void EndGame()
+    {
+        _inputActions.Disable();
+    }
     void Update()
     {
-        if (!_inputActions.Player.enabled || _controlleble == null) return;
-        _controlleble.MovementForward();
-        _controlleble.MovementHorizontal(_inputActions);
+        if (!_inputActions.Player.enabled) return;
+        _controlleble?.MovementForward();
+        _controlleble?.MovementHorizontal(_inputActions);
+    }
+
+    private void OnDestroy()
+    {
+        LevelManager.OnLevelStarted -= StartGame;
+        LevelManager.OnLevelEnted -= EndGame;
     }
 }
 
 public interface IControlleble
 {
-    public float RangePosition { get; }
+    public PlayerParametrs PlayerParametrs { get;}
     public float MinXPosition { get; set; }
     public float MaxXPosition { get; set; }
     public void MovementForward();

@@ -1,24 +1,61 @@
+using SingleTon;
+using System;
 using UnityEngine;
 
 namespace ButchersGames
 {
-    public class Level : MonoBehaviour
+    public class Level : SingletonBase<Level>
     {
-        [SerializeField] private Transform playerSpawnPoint;
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        if (playerSpawnPoint != null)
+        [Serializable]
+        private struct ItemsLevelLists
         {
-            Gizmos.color = Color.magenta;
-            var m = Gizmos.matrix;
-            Gizmos.matrix = playerSpawnPoint.localToWorldMatrix;
-            Gizmos.DrawSphere(Vector3.up * 0.5f + Vector3.forward, 0.5f);
-            Gizmos.DrawCube(Vector3.up * 0.5f, Vector3.one);
-            Gizmos.matrix = m;
+            public ItemsList[] itemsList;
         }
-    }
-#endif
+        [Serializable]
+        private class ItemsList
+        {
+            public FlagZone flagZone;
+        }
+        [SerializeField] private Transform playerSpawnPoint;
+        [SerializeField] private ItemsLevelLists _itemsLevelLists;
+        [SerializeField] private int _activeCurrentItem;
+        protected override void Awake()
+        {
+            base.Awake();
+            StartActivePlatform();
+        }
+        private void StartActivePlatform()
+        {
+            foreach (var itemsList in _itemsLevelLists.itemsList)
+            {
+                if (_activeCurrentItem == 0 || _activeCurrentItem == 1)
+                {
+                    itemsList.flagZone.gameObject.SetActive(true);
+                    _activeCurrentItem++;
+                }
+            }
+            _activeCurrentItem = 0;
+        }
+        public void TurnOffItems()
+        {
+
+                foreach (var itemsList in _itemsLevelLists.itemsList)
+                {
+                    if (!itemsList.flagZone.gameObject.activeSelf && !itemsList.flagZone.IsPassed && _activeCurrentItem < 1)
+                    {
+                        itemsList.flagZone.gameObject.SetActive(true);
+                        _activeCurrentItem++;
+                        TurnOffItems();
+                        break;
+                    }
+                    else if (itemsList.flagZone.gameObject.activeSelf && itemsList.flagZone.IsPassed)
+                    {
+                        itemsList.flagZone.gameObject.SetActive(false);
+                        _activeCurrentItem--;
+                    }
+                }
+            }
+
+        
     }
 }

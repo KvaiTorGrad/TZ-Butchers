@@ -29,7 +29,8 @@ namespace ButchersGames
         [SerializeField] LevelsList levels;
         public List<Level> Levels => levels.lvls;
 
-        public event Action OnLevelStarted;
+        public static event Action OnLevelStarted;
+        public static Action OnLevelEnted;
 
 
         public void Init()

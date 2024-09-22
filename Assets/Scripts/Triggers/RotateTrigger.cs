@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RotateTrigger : MonoBehaviour
+public class RotateTrigger : Item
 {
     private enum DirectionRotate
     {
@@ -8,7 +8,7 @@ public class RotateTrigger : MonoBehaviour
         Right
     }
     [SerializeField] private DirectionRotate _directionRotate;
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.TryGetComponent(out IControlleble player))
         {
@@ -18,14 +18,14 @@ public class RotateTrigger : MonoBehaviour
                 case DirectionRotate.Left:
                     direction = -90;
                     player.TurningDirection(Side.X,direction);
-                    player.MaxXPosition = transform.position.x + player.RangePosition;
-                    player.MinXPosition = transform.position.x - player.RangePosition;
+                    player.MaxXPosition = transform.position.x + player.PlayerParametrs.RangePosition;
+                    player.MinXPosition = transform.position.x - player.PlayerParametrs.RangePosition;
                     break;
                 case DirectionRotate.Right:
                     direction = 90;
                     player.TurningDirection(Side.Z, direction);
-                    player.MaxXPosition = transform.position.z + player.RangePosition;
-                    player.MinXPosition = transform.position.z - player.RangePosition;
+                    player.MaxXPosition = transform.position.z + player.PlayerParametrs.RangePosition;
+                    player.MinXPosition = transform.position.z - player.PlayerParametrs.RangePosition;
                     break;
             }
         }
