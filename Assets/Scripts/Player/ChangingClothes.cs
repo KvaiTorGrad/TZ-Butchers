@@ -11,7 +11,6 @@ public class ChangingClothes : MonoBehaviour
     }
     private void Change(int lvl)
     {
-        if (_activeLvlCloth == lvl) return;
         clothes[_activeLvlCloth].gameObject.SetActive(false);
         switch (lvl)
         {
